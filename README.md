@@ -1,4 +1,4 @@
-=====ROSE: RANK ORDERING OF SUPER-ENHANCERS=====
+ROSE: RANK ORDERING OF SUPER-ENHANCERS
 ============================================================
 
 ROSE IS RELEASED UNDER THE MIT X11 LICENSE
