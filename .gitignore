@@ -3,3 +3,5 @@ data/
 example/
 test/
 *.pyc
+#*
+*DS_Store
