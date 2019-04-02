@@ -31,18 +31,19 @@ Please cite these papers when using this code.
 
 ## 1) PREPARATION/REQUIREMENTS
 
-* .bam files of sequencing reads for factor of interest and control (WCE/IgG recommended).
-* .bam files must have chromosome IDs starting with "chr"
-* .bam files must be sorted and indexed using SAMtools in order for bamToGFF.py to work. (http://samtools.sourceforge.net/samtools.shtml)
+* `.bam` files of sequencing reads for factor of interest and control (WCE/IgG recommended).
+* `.bam` files must have chromosome IDs starting with "chr"
+* `.bam` files must be sorted and indexed using SAMtools in order for bamToGFF.py to work. (http://samtools.sourceforge.net/samtools.shtml)
 * Code must be run from directory in which it is stored.
-* .gff file of constituent enhancers previously identified (gff format ref: https://genome.ucsc.edu/FAQ/FAQformat.html#format3).
-* .gff must have the following columns:
-  1: chromosome (chr#)
-  2: unique ID for each constituent enhancer region
-  4: start of constituent
-  5: end of constituent
-  7: strand (+,-,.)
-  9: unique ID for each constituent enhancer region
+* `.gff` file of constituent enhancers previously identified (gff format ref: https://genome.ucsc.edu/FAQ/FAQformat.html#format3).
+* `.gff` must have the following columns:
+  1. chromosome (chr#)
+  2. unique ID for each constituent enhancer region
+  4. start of constituent
+  5. end of constituent
+  7. strand (+,-,.)
+  9. unique ID for each constituent enhancer region
+  
   NOTE: if value for column 2 and 9 differ, value in column 2 will be used
 
 ## 2) CONTENTS
