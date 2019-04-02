@@ -37,14 +37,13 @@ Please cite these papers when using this code.
 * Code must be run from directory in which it is stored.
 * `.gff` file of constituent enhancers previously identified (gff format ref: https://genome.ucsc.edu/FAQ/FAQformat.html#format3).
 * `.gff` must have the following columns:
-  1. chromosome (chr#)
-  2. unique ID for each constituent enhancer region
-  4. start of constituent
-  5. end of constituent
-  7. strand (+,-,.)
-  9. unique ID for each constituent enhancer region
-  
-  NOTE: if value for column 2 and 9 differ, value in column 2 will be used
+  * 1:chromosome (chr#)
+  * 2:unique ID for each constituent enhancer region
+  * 4:start of constituent
+  * 5:end of constituent
+  * 7:strand (+,-,.)
+  * 9:unique ID for each constituent enhancer region
+  * NOTE: if value for column 2 and 9 differ, value in column 2 will be used
 
 ## 2) CONTENTS
 
