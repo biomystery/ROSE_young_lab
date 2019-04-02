@@ -611,16 +611,16 @@ def checkChrStatus(bamFile):
       sline = line.split("\t")
       #print sline[2]
       if re.search(chrPattern, sline[2]):
-	return 1
+        return 1
       else:
-	return 0
+        return 0
 	    
 def convertBitwiseFlag(flag):
    if int(flag) & 16:
-	return "-";
+       return "-";
    else:
-	return "+";
-           
+       return "+";
+   
 class Bam:
     '''A class for a sorted and indexed bam file that allows easy analysis of reads'''
     def __init__(self,bamFile):
@@ -643,9 +643,9 @@ class Bam:
     
     def convertBitwiseFlag(self,flag):
       if flag & 16:
-	return "-";
+        return "-";
       else:
-	return "+";
+        return "+";
 
     def getRawReads(self,locus,sense,unique = False,includeJxnReads = False,printCommand = False):
         '''
