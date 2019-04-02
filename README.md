@@ -98,6 +98,23 @@ From within root directory:
 
 All file names begin with the root of INPUT_CONSTITUENT_GFF
 
+```
+├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL_ENHANCER_REGION_MAP.txt
+├── HG18_MM1S_MED1_AllEnhancers.table.txt
+├── HG18_MM1S_MED1_Enhancers_withSuper.bed
+├── HG18_MM1S_MED1_Plot_points.png
+├── HG18_MM1S_MED1_SuperEnhancers.table.txt
+├── gff
+│   ├── HG18_MM1S_MED1.gff
+│   ├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL.debug
+│   └── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL.gff
+└── mappedGFF
+    ├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL_MM1S_MED1.hg18.bwt.sorted.bam_MAPPED.gff
+    ├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL_MM1S_WCE.hg18.bwt.sorted.bam_MAPPED.gff
+    ├── HG18_MM1S_MED1_MM1S_MED1.hg18.bwt.sorted.bam_MAPPED.gff
+    └── HG18_MM1S_MED1_MM1S_WCE.hg18.bwt.sorted.bam_MAPPED.gff
+```
+
 **OUTPUT_DIRECTORY/gff/**
 
 * `.gff`: copied .gff file of INPUT_CONSTITUENT_GFF - `(chrom, name, [blank], start, end, [blank], [blank], strand, [blank], [blank], name)`
@@ -124,24 +141,6 @@ Signal of RANKING_BAM is density times length.
 (chromosome, stitched enhancer start, stitched enhancer end, stitched enhancer ID, rank by RANKING_BAM signal)
 * `_Plot_points.png`: visualization of the ranks of super-enhancers and the two groups. Stitched enhancers are ranked by their RANKING_BAM signal and their ranks are along the X axis. Corresponding RANKING_BAM signal on the Y axis.
 
-**Tree structure:** 
-
-```
-├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL_ENHANCER_REGION_MAP.txt
-├── HG18_MM1S_MED1_AllEnhancers.table.txt
-├── HG18_MM1S_MED1_Enhancers_withSuper.bed
-├── HG18_MM1S_MED1_Plot_points.png
-├── HG18_MM1S_MED1_SuperEnhancers.table.txt
-├── gff
-│   ├── HG18_MM1S_MED1.gff
-│   ├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL.debug
-│   └── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL.gff
-└── mappedGFF
-    ├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL_MM1S_MED1.hg18.bwt.sorted.bam_MAPPED.gff
-    ├── HG18_MM1S_MED1_12KB_STITCHED_TSS_DISTAL_MM1S_WCE.hg18.bwt.sorted.bam_MAPPED.gff
-    ├── HG18_MM1S_MED1_MM1S_MED1.hg18.bwt.sorted.bam_MAPPED.gff
-    └── HG18_MM1S_MED1_MM1S_WCE.hg18.bwt.sorted.bam_MAPPED.gff
-```
 
 ## NOTES:
 
