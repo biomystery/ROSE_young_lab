@@ -1,0 +1,70 @@
+#!/bin/bash
+#PBS -q condo
+#PBS -N rose
+#PBS -l nodes=1:ppn=4
+#PBS -l walltime=8:00:00
+#PBS -V
+#PBS -m abe
+#PBS -A epigen-group
+
+# -v pass parameters: ctrl_sbam=$(pwd)/../data/MM1S_WCE.hg18.bwt.sorted.bam
+
+
+# input: sample_name=YAPC_H3K27Ac
+#
+source activate bds_atac_py3
+
+############################################################
+# PARAMETERS
+############################################################
+SAMPLE=$sample_name
+OUTPUT_DIR=/home/zhc268/data/projects/cantal/results/chipseq/pancancer_SE/$SAMPLE
+DATA_DIR=/home/zhc268/data/projects/cantal/results/chipseq/pancancer_set/download
+mkdir -p $OUTPUT_DIR
+LOG_FILE=$(dirname $OUTPUT_DIR)/$SAMPLE.log.txt
+touch $LOG_FILE
+TH_Q=1
+
+echo "############################################################" | tee $LOG_FILE
+echo -e "[$(date)] STEP1: filter boardpeak & make gff" | tee -a $LOG_FILE
+
+board_peak=$DATA_DIR"/"${SAMPLE}*broad* 
+bd_peak_width=${OUTPUT_DIR}/${SAMPLE}_bdpeak_width.txt
+bd_peak_gff=${OUTPUT_DIR}/${SAMPLE}_bdpeak_qth${TH_Q}.gff
+bd_peak_gff_width=${OUTPUT_DIR}/${SAMPLE}_bdpeak_qth${TH_Q}_width.txt
+
+zcat $board_peak | awk '{print $3-$2+1}' > $bd_peak_width
+echo -e "total_boardpeaks_number:$(cat $bd_peak_width|wc -l)" | tee -a $LOG_FILE
+echo -e "total_boardpeaks_length:$(awk 'BEGIN{i=0}{i=i+$1}END{print i}' $bd_peak_width)" | tee -a $LOG_FILE
+# filter & convert to GFF
+zcat $board_peak | awk -v OFS='\t' -v s=$SAMPLE -v th=$TH_Q '($9>th){print $1,s"_"$4,"",$2,$3,"",$6,"",s"_"$4}' > $bd_peak_gff
+awk -v FS='\t' '{print $5-$4+1}' $bd_peak_gff > $bd_peak_gff_width
+echo -e "total_filtered_boardpeaks_number:$(cat $bd_peak_gff_width|wc -l)" | tee -a $LOG_FILE
+echo -e "total_filtered_boardpeaks_length:$(awk 'BEGIN{i=0}{i=i+$1}END{print i}' $bd_peak_gff_width)" | tee -a $LOG_FILE
+
+
+echo "############################################################" | tee -a $LOG_FILE
+echo -e "[$(date)] STEP2: call rose" | tee -a $LOG_FILE
+
+## rose parameters
+GENOME=HG19
+INPUT_PEAK=$bd_peak_gff
+INPUT_SORT_BAM=$DATA_DIR/${SAMPLE}.final.bam
+CTRL_SORT_BAM=${DATA_DIR}/${SAMPLE/H3K27Ac/Input}.final.bam
+TSS_LEN=2500
+STITCH_LEN=12500
+
+cd /projects/ps-epigen/software/ROSE_young_lab/
+export PATH=/projects/ps-epigen/software/ROSE_young_lab/:$PATH
+
+python2 $(which ROSE_main.py) -g $GENOME \
+        -i $INPUT_PEAK \
+        -r $INPUT_SORT_BAM \
+        -c $CTRL_SORT_BAM \
+        -o $OUTPUT_DIR -s $STITCH_LEN -t $TSS_LEN
+
+
+echo -e "[$(date)] STEP2 finished" | tee -a $LOG_FILE
+
+
+# awk -v FS=',' '{print $1}' ChIPseq_name.csv |grep H3K27Ac| while read l; do echo -e "qsub -k oe  -v sample_name=$l /home/zhc268/data/software/ROSE_young_lab/scripts/run_pancaner_norm.pbs";done|bash

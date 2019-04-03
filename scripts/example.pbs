@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -q condo
+#PBS -N rose
+#PBS -l nodes=1:ppn=4
+#PBS -l walltime=8:00:00
+#PBS -V
+#PBS -m abe
+#PBS -A epigen-group
+
+# -v pass parameters: ctrl_sbam=$(pwd)/../data/MM1S_WCE.hg18.bwt.sorted.bam
+
+############################################################
+## call rose
+############################################################
+## rose parameters
+GENOME=HG18
+INPUT_PEAK=./data/HG18_MM1S_MED1.gff
+INPUT_SORT_BAM=./data/MM1S_MED1.hg18.bwt.sorted.bam
+[[ ! -z $ctrl_sbam ]] && CPAR="-c $ctrl_sbam"
+OUPUT_DIRNM=/home/zhc268/example
+TSS_LEN=2500
+STITCH_LEN=12500
+
+cd /projects/ps-epigen/software/ROSE_young_lab/
+
+export PATH=/projects/ps-epigen/software/ROSE_young_lab/:$PATH
+
+python2 $(which ROSE_main.py) -g $GENOME \
+        -i $INPUT_PEAK \
+        -r $INPUT_SORT_BAM \
+        $CPAR \
+        -o $OUPUT_DIRNM -s $STITCH_LEN -t $TSS_LEN
