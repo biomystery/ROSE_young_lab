@@ -18,12 +18,13 @@ source activate bds_atac_py3
 # PARAMETERS
 ############################################################
 SAMPLE=$sample_name
-OUTPUT_DIR=/home/zhc268/data/projects/cantal/results/chipseq/pancancer_SE/$SAMPLE
+TH_Q=2
+OUTPUT_DIR=/home/zhc268/data/projects/cantal/results/chipseq/pancancer_SE/${SAMPLE}_q${TH_Q}
 DATA_DIR=/home/zhc268/data/projects/cantal/results/chipseq/pancancer_set/download
 mkdir -p $OUTPUT_DIR
-LOG_FILE=$(dirname $OUTPUT_DIR)/$SAMPLE.log.txt
+LOG_FILE=${OUTPUT_DIR}/${SAMPLE}.log.txt
 touch $LOG_FILE
-TH_Q=1
+
 
 echo "############################################################" | tee $LOG_FILE
 echo -e "[$(date)] STEP1: filter boardpeak & make gff" | tee -a $LOG_FILE
@@ -67,4 +68,6 @@ python2 $(which ROSE_main.py) -g $GENOME \
 echo -e "[$(date)] STEP2 finished" | tee -a $LOG_FILE
 
 
-# awk -v FS=',' '{print $1}' ChIPseq_name.csv |grep H3K27Ac| while read l; do echo -e "qsub -k oe  -v sample_name=$l /home/zhc268/data/software/ROSE_young_lab/scripts/run_pancaner_norm.pbs";done|bash
+# awk -v FS=',' '{print $1}' ChIPseq_name.csv |grep H3K27Ac| while read l; do echo -e "qsub -k oe  -v sample_name=$l /home/zhc268/data/software/ROSE_young_lab/scripts/run_pancaner_chip.pbs";done|bash
+
+# awk '{print $2}' including_libs.txt |grep H3K27Ac| while read l; do echo -e "qsub -k oe  -v sample_name=$l /home/zhc268/data/software/ROSE_young_lab/scripts/run_pancaner_chip.pbs";done|bash
